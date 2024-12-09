@@ -29,12 +29,12 @@ class FotoResource extends Resource
 
         // FileUpload untuk gambar
         FileUpload::make('gambar')
-            ->label('Gambar')
+            ->label('Unggah Gambar')
             ->image() // Menandakan bahwa yang diupload adalah gambar
             ->disk('public') // Tentukan disk tempat file akan disimpan
             ->directory('photos') // Direktori tempat file disimpan (misalnya photos)
             ->required(),
-            ]);
+        ]);
     }
 
     public static function table(Table $table): Table

@@ -189,66 +189,15 @@
 
     <!-- Products Section -->
     <section id="product" class="py-12">
-        <h2 class="text-3xl font-bold text-center mb-8">Our Products</h2>
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <figure class="p-4">
-                        <img src="images/product-1.png" class="w-full h-48 object-contain" alt="">
-                    </figure>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">Nike Shoe</h3>
-                        <p class="text-gray-600 mb-4">
-                            Stylish design and advanced technology that supports sports performance
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <p class="text-xl font-bold">$345</p>
-                            <button class="add-to-cart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                             Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <figure class="p-4">
-                        <img src="images/product-2.png" class="w-full h-48 object-contain" alt="">
-                    </figure>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">Nike Shoe</h3>
-                        <p class="text-gray-600 mb-4">
-                            Stylish design and advanced technology that supports sports performance
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <p class="text-xl font-bold">$345</p>
-                            <button class="add-to-cart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                             Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <figure class="p-4">
-                        <img src="images/product-3.png" class="w-full h-48 object-contain" alt="">
-                    </figure>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">Nike Shoe</h3>
-                        <p class="text-gray-600 mb-4">
-                            Stylish design and advanced technology that supports sports performance
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <p class="text-xl font-bold">$345</p>
-                            <button class="add-to-cart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                             Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="product" class="py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">Our Products</h2>
+    <div class="container mx-auto px-4">
+        <div id="product-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Products will be loaded here -->
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- About Section -->
 <section id="about" class="py-12 bg-white-100">
     <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-8">About Us</h2>
@@ -272,6 +221,46 @@
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadProducts();
+});
+
+function loadProducts() {
+    fetch('/api/products')
+        .then(response => response.json())
+        .then(products => {
+            const container = document.getElementById('product-container');
+            container.innerHTML = ''; // Clear existing content
+            
+            products.forEach(product => {
+                const productHTML = `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <figure class="p-4">
+                            <img src="/storage/photos/${product.foto}" class="w-full h-48 object-contain" alt="${product.nama_produk}">
+                        </figure>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold mb-2">${product.nama_produk}</h3>
+                            <p class="text-gray-600 mb-4">
+                                Warna: ${product.warna}<br>
+                                Customer: ${product.pelanggan}
+                            </p>
+                            <div class="flex justify-between items-center">
+                                <p class="text-xl font-bold">Rp ${product.harga.toLocaleString()}</p>
+                                <button class="add-to-cart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += productHTML;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+</script>
 
    <!-- Quotes Section -->
 <section class="bg-white to-transparent py-16 text-black">

@@ -10,7 +10,7 @@ class Foto extends Model
 
     protected $fillable = [
         
-        'gambar',
+        'gambar', 
     ];
 
     protected $table = 'fotos'; 
